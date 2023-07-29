@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Get Current Tab's URL</title>
+  </head>
+  <body>
+    <h1>Click the button to get the current tab's URL:</h1>
+    <button id="get-url-btn">Get URL</button>
+    <div id="url-output"></div>
+    <
+    <script
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
+    >
+            document.addEventListener("DOMContentLoaded", function() {
+        var getUrlBtn = document.getElementById("get-url-btn");
+        var urlOutput = document.getElementById("url-output");
+
+        getUrlBtn.addEventListener("click", function() {
+          chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            var url = tabs[0].url;
+            urlOutput.innerText = "The current tab's URL is: " + url;
+            const s=JSON.stringfy(url);
+            $.ajax({
+              url:"/test",
+              type:"POST",
+              contentType:"application/json",
+              data:JSON.stringfy(s)
+            })
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
